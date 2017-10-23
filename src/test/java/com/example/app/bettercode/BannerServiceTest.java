@@ -183,6 +183,9 @@ public class BannerServiceTest {
         Assert.assertEquals(AdType.VIDEO, banner.getAdType());
     }
 
+    /**
+     * test for {@link BannerService#setName(String)}.
+     */
     @Test
     public void setNameSetsNameOnlyIfProvidedInputIsNotEmpty() {
         String expectedName = "anotherName";
@@ -190,6 +193,9 @@ public class BannerServiceTest {
         Assert.assertEquals(expectedName, this.bannerService.getName());
     }
 
+    /**
+     * test for {@link BannerService#setName(String)}.
+     */
     @Test
     public void setNameKeepsDefaultNameIfProvidedInputIsEmpty() {
         this.bannerService.setName("");
