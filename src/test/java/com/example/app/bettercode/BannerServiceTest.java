@@ -123,7 +123,7 @@ public class BannerServiceTest {
      * test for {@link BannerService#getBanner(AdRequest)}.
      */
     @Test
-    public void getBannerReturnsNullIfAppIsBanner() {
+    public void getBannerReturnsNullIfAppIsBanned() {
         Mockito.when(this.appMock.isBanned()).thenReturn(true);
         Banner banner = this.bannerService.getBanner(this.adRequestMock);
         Assert.assertNull(banner);
