@@ -97,24 +97,24 @@ public class BannerServiceTest {
 
     @Before
     public void setup() {
-        Mockito.when(this.adRequestMock.getAdPlaceId()).thenReturn("adPlaceId");
-        Mockito.when(this.adPlaceRepositoryMock.findById(this.adPlaceId)).thenReturn(this.adPlaceMock);
+        Mockito.when(adRequestMock.getAdPlaceId()).thenReturn("adPlaceId");
+        Mockito.when(adPlaceRepositoryMock.findById(adPlaceId)).thenReturn(adPlaceMock);
 
-        Mockito.when(this.adPlaceMock.getAppId()).thenReturn("appId");
-        Mockito.when(this.appRepositoryMock.findById(this.appId)).thenReturn(this.appMock);
+        Mockito.when(adPlaceMock.getAppId()).thenReturn("appId");
+        Mockito.when(appRepositoryMock.findById(appId)).thenReturn(appMock);
 
-        Mockito.when(this.appMock.isBanned()).thenReturn(false);
+        Mockito.when(appMock.isBanned()).thenReturn(false);
 
         PowerMockito.mockStatic(SizeSelector.class);
         Mockito.when(
             SizeSelector.select(Mockito.any(AdSize.class), Mockito.any(AdSize.class), Mockito.any(AdSize.class))
-        ).thenReturn(this.adSizeMock);
+        ).thenReturn(adSizeMock);
 
-        this.bannerService = new BannerService(
-            this.adPlaceRepositoryMock,
-            this.appRepositoryMock,
-            this.imageBannerGeneratorMock,
-            this.videoBannerGeneratorMock
+        bannerService = new BannerService(
+            adPlaceRepositoryMock,
+            appRepositoryMock,
+            imageBannerGeneratorMock,
+            videoBannerGeneratorMock
         );
 
     }
@@ -124,8 +124,8 @@ public class BannerServiceTest {
      */
     @Test
     public void getBannerReturnsNullIfAppIsBanned() {
-        Mockito.when(this.appMock.isBanned()).thenReturn(true);
-        Banner banner = this.bannerService.getBanner(this.adRequestMock);
+        Mockito.when(appMock.isBanned()).thenReturn(true);
+        Banner banner = bannerService.getBanner(adRequestMock);
         Assert.assertNull(banner);
     }
 
@@ -137,7 +137,7 @@ public class BannerServiceTest {
         Mockito.when(
             SizeSelector.select(Mockito.any(AdSize.class), Mockito.any(AdSize.class), Mockito.any(AdSize.class))
         ).thenReturn(null);
-        Banner banner = this.bannerService.getBanner(this.adRequestMock);
+        Banner banner = bannerService.getBanner(adRequestMock);
         Assert.assertNull(banner);
     }
 
@@ -146,11 +146,11 @@ public class BannerServiceTest {
      */
     @Test
     public void getBannerWorksCorrectlyWithImageAds() {
-        Mockito.when(this.adPlaceMock.getType()).thenReturn(AdType.IMAGE);
+        Mockito.when(adPlaceMock.getType()).thenReturn(AdType.IMAGE);
         String expectedUrl = "imageUrl";
-        Mockito.when(this.imageBannerGeneratorMock.generate(AdType.IMAGE, this.adSizeMock)).thenReturn(expectedUrl);
+        Mockito.when(imageBannerGeneratorMock.generate(AdType.IMAGE, adSizeMock)).thenReturn(expectedUrl);
 
-        Banner banner = this.bannerService.getBanner(this.adRequestMock);
+        Banner banner = bannerService.getBanner(adRequestMock);
         Assert.assertEquals(expectedUrl, banner.getUrl());
         Assert.assertEquals(AdType.IMAGE, banner.getAdType());
     }
@@ -160,11 +160,11 @@ public class BannerServiceTest {
      */
     @Test
     public void getBannerWorksCorrectlyWithAnimationAds() {
-        Mockito.when(this.adPlaceMock.getType()).thenReturn(AdType.ANIMATION);
+        Mockito.when(adPlaceMock.getType()).thenReturn(AdType.ANIMATION);
         String expectedUrl = "imageUrl";
-        Mockito.when(this.imageBannerGeneratorMock.generate(AdType.ANIMATION, this.adSizeMock)).thenReturn(expectedUrl);
+        Mockito.when(imageBannerGeneratorMock.generate(AdType.ANIMATION, adSizeMock)).thenReturn(expectedUrl);
 
-        Banner banner = this.bannerService.getBanner(this.adRequestMock);
+        Banner banner = bannerService.getBanner(adRequestMock);
         Assert.assertEquals(expectedUrl, banner.getUrl());
         Assert.assertEquals(AdType.ANIMATION, banner.getAdType());
     }
@@ -174,11 +174,11 @@ public class BannerServiceTest {
      */
     @Test
     public void getBannerWorksCorrectlyWithVideoAds() {
-        Mockito.when(this.adPlaceMock.getType()).thenReturn(AdType.VIDEO);
+        Mockito.when(adPlaceMock.getType()).thenReturn(AdType.VIDEO);
         String expectedUrl = "videoUrl";
-        Mockito.when(this.videoBannerGeneratorMock.generate(this.adSizeMock)).thenReturn(expectedUrl);
+        Mockito.when(videoBannerGeneratorMock.generate(adSizeMock)).thenReturn(expectedUrl);
 
-        Banner banner = this.bannerService.getBanner(this.adRequestMock);
+        Banner banner = bannerService.getBanner(adRequestMock);
         Assert.assertEquals(expectedUrl, banner.getUrl());
         Assert.assertEquals(AdType.VIDEO, banner.getAdType());
     }
@@ -189,8 +189,8 @@ public class BannerServiceTest {
     @Test
     public void setNameSetsNameOnlyIfProvidedInputIsNotEmpty() {
         String expectedName = "anotherName";
-        this.bannerService.setName(expectedName);
-        Assert.assertEquals(expectedName, this.bannerService.getName());
+        bannerService.setName(expectedName);
+        Assert.assertEquals(expectedName, bannerService.getName());
     }
 
     /**
@@ -198,8 +198,8 @@ public class BannerServiceTest {
      */
     @Test
     public void setNameKeepsDefaultNameIfProvidedInputIsEmpty() {
-        this.bannerService.setName("");
-        Assert.assertEquals("bannerService", this.bannerService.getName());
+        bannerService.setName("");
+        Assert.assertEquals("bannerService", bannerService.getName());
     }
 
 }
