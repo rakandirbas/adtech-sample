@@ -38,7 +38,7 @@ public class BannerServiceTest {
     private BannerService bannerService;
 
     /**
-     * AdPlaceRepository mock
+     * AdPlaceRepository mock.
      */
     @Mock
     private AdPlaceRepository adPlaceRepositoryMock;
@@ -62,7 +62,7 @@ public class BannerServiceTest {
     private AdRequest adRequestMock;
 
     /**
-     * VideoBannerGenerator mock
+     * VideoBannerGenerator mock.
      */
     @Mock
     private VideoBannerGenerator videoBannerGeneratorMock;
@@ -95,6 +95,9 @@ public class BannerServiceTest {
      */
     private String appId = "appId";
 
+    /**
+     * Sets up the test-suite.
+     */
     @Before
     public void setup() {
         Mockito.when(adRequestMock.getAdPlaceId()).thenReturn("adPlaceId");
